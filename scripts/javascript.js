@@ -4,6 +4,7 @@ let point = document.getElementById("point");
 let operation = document.querySelectorAll(".operator");
 let equal = document.getElementById("result");
 let clearButton = document.getElementById("clear");
+let DelBut = document.getElementById("delete");
 
 let number1 = 0;
 let operator = "";
@@ -29,6 +30,9 @@ clearButton.addEventListener("click", () => {
 
 equal.addEventListener("click", () => {
     screen.textContent = result();
+    number2 = 0;
+    number1 = screen.textContent;
+    second = false;
 })
 
 values.forEach(button => {
@@ -44,6 +48,15 @@ values.forEach(button => {
             screen.textContent = "Too Big";
         }
     })
+})
+
+DelBut.addEventListener("click", () => {
+    screen.textContent = screen.textContent.slice(0, -1);
+    if(!second){
+        number1 = number1.slice(0, -1);
+    } else {
+        number2 = number2.slice(0, -1);
+    }
 })
 
 function clear(){
@@ -69,6 +82,10 @@ function result(){
         endValue = div(+number1, +number2);
     }
     if(endValue.toString().split('').length>11){
+        if(endValue.toString().split('').some((e) => e == '.')){
+            let subString = endValue.toString().substring(0, 11);
+            return +subString;
+        } 
         return "Too Big";
     }
     return endValue;
@@ -78,7 +95,6 @@ function sum(a,b){
     return a+b;
 }
 function sub(a,b){
-    console.log(+a + " " + +b);
     return a-b;
 }
 function mul(a,b){
